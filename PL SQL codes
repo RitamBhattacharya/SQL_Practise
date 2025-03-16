@@ -1,0 +1,443 @@
+1.Grade System
+===============
+DECLARE
+	MARKS NUMBER(3);
+	GRADE CHAR(1);
+BEGIN
+	MARKS:=&MARKS;
+	IF MARKS>=90 AND MARKS<=100 THEN GRADE:='O';
+	ELSIF MARKS>=80 AND MARKS<90 THEN GRADE:='E';
+	ELSIF MARKS>=70 AND MARKS<80 THEN GRADE:='A';
+	ELSIF MARKS>=60 AND MARKS<70 THEN GRADE:='B';
+	ELSIF MARKS>=50 AND MARKS<60 THEN GRADE:='C';
+	ELSIF MARKS>=40 AND MARKS<50 THEN GRADE:='D';
+	ELSIF MARKS<40 THEN GRADE:='E';
+	ELSE GRADE:='I';
+	END IF;
+	DBMS_OUTPUT.PUT_LINE('MARKS :'||MARKS);
+	DBMS_OUTPUT.PUT_LINE('GRADE :'||GRADE);
+END;
+/
+
+2.Even Numbers
+==============
+DECLARE
+	N NUMBER(3);
+BEGIN
+	N:=&N;
+	FOR I IN 1..N LOOP
+		IF MOD(I,2)=0 THEN DBMS_OUTPUT.PUT_LINE(I);
+		END IF;
+	END LOOP;
+END;
+/
+	
+
+3.FACTORIAL 
+============
+DECLARE
+	NUM NUMBER;
+	F NUMBER := 1;
+BEGIN
+	NUM:=&NUM;
+	FOR I IN 1..NUM LOOP
+		F := F*I;
+	END LOOP;
+	DBMS_OUTPUT.PUT_LINE('FACTORIAL OF '||NUM||' IS :'||F);
+END;
+/
+
+
+4.FIBONACCI SERIES [WRONG IN RIMTU]
+===================
+DECLARE
+	A NUMBER := 0;
+	B NUMBER := 1;
+	C NUMBER := 0;
+	NUM NUMBER;
+BEGIN
+	NUM:=&NUM;
+	DBMS_OUTPUT.PUT_LINE(A);
+	DBMS_OUTPUT.PUT_LINE(B);
+	LOOP
+		C:=A+B;
+		EXIT WHEN C>NUM;
+		DBMS_OUTPUT.PUT_LINE(C);
+		A:=B;
+		B:=C;
+	END LOOP;
+END;
+/
+	
+
+
+5) Write a PL/SQL program to insert  random numbers in a table random_num (rand_no number(20))
+===============================================================================================
+DECLARE
+	NUM NUMBER;
+BEGIN
+	FOR I IN 1..10 LOOP
+		NUM:=DBMS_RANDOM.VALUE(1,100);
+		INSERT INTO RANDOM_NUM VALUES(NUM);
+	END LOOP;
+END;
+/
+
+
+
+6) Write a PL/SQL program to fill up the table sphere(rad number(2),area number(10,2), volume 
+ number(15,2)) with radius values from 1 - 20
+===============================================================================================
+DECLARE
+	RAD NUMBER;
+	AREA NUMBER;
+	VOLUME NUMBER;
+	PI NUMBER := 3.14;
+BEGIN
+	FOR RAD IN 1..20 LOOP
+		AREA:=PI*RAD*RAD;
+		VOLUME:=4/3 * PI * RAD * RAD * RAD;
+		INSERT INTO SPHERE VALUES(RAD,AREA,VOLUME); 
+	END LOOP;
+END;
+
+
+
+
+7) Write a PL/SQL program to display name, age and rating from table sailor from user input s_id
+=================================================================================================
+DECLARE
+	S_SID SAILOR.SID%TYPE;
+	S_SNAME SAILOR.SNAME%TYPE;
+	S_AGE SAILOR.AGE%TYPE;
+	S_RATING SAILOR.RATING%TYPE;
+BEGIN
+	S_SID:='&S_SID';
+	SELECT SNAME,AGE,RATING INTO S_SNAME,S_AGE,S_RATING FROM SAILOR WHERE SID=S_SID;
+	DBMS_OUTPUT.PUT_LINE(S_SID||'  '||S_SNAME||'  '||S_AGE||'  '||S_RATING);
+END;
+/
+
+
+
+8) Write a PL/SQL program to display all multiples of 3 up to a number using while loop
+========================================================================================
+DECLARE
+	NUM NUMBER;
+	I NUMBER :=0;
+BEGIN
+	NUM:=&NUM;
+	WHILE I<=NUM LOOP
+		DBMS_OUTPUT.PUT_LINE(I);
+		I:=I+3;
+	END LOOP;
+END;
+
+
+9) Write a PL/SQL program to display multiples of 5 using for loop
+====================================================================
+DECLARE
+	NUM NUMBER;
+BEGIN
+	NUM:=&NUM;
+	FOR I IN 1..NUM LOOP
+		IF I MOD 5 = 0 THEN
+			DBMS_OUTPUT.PUT_LINE(I);
+		END IF;
+	END LOOP;
+END;
+/
+
+
+
+10) Write a PL/SQL program to calculate the salary from basic pay
+==================================================================
+DECLARE
+	BASIC_PAY NUMBER;
+	DA NUMBER;
+	HRA NUMBER;
+	SALARY NUMBER;
+BEGIN
+	BASIC_PAY:=&BASIC_PAY;
+	DA:=0.2*BASIC_PAY;
+	HRA:=0.15*BASIC_PAY;
+	SALARY:=BASIC_PAY+DA+HRA;
+
+	DBMS_OUTPUT.PUT_LINE(SALARY);
+END;
+/
+
+
+11) Write a PL/SQL program to STRING REVERSE.
+==============================================
+DECLARE
+	STR VARCHAR2(20);
+	STRREV VARCHAR2(20);
+	LEN NUMBER;
+	CH CHAR;
+	
+BEGIN
+	STR:='&STR';
+	LEN:=LENGTH(STR);
+	FOR I IN 1..LEN LOOP
+		CH:=SUBSTR(STR,I,1);
+		STRREV:=CONCAT(CH,STRREV);
+	END LOOP;
+	DBMS_OUTPUT.PUT_LINE(STRREV);
+END;
+/
+
+
+12) LEAP YEAR
+==============
+DECLARE
+	YEAR NUMBER;
+BEGIN
+	YEAR:=&YEAR;
+	IF (YEAR MOD 400 = 0) OR ((YEAR MOD 100 != 0) AND (YEAR MOD 4 = 0)) THEN
+		DBMS_OUTPUT.PUT_LINE(YEAR|| ' IS A LEAP YEAR');
+	ELSE DBMS_OUTPUT.PUT_LINE(YEAR||' IS NOT A LEAP YEAR');
+	END IF;
+END;
+/
+
+
+13) SELECT ALL DATA FROM SAILOR TABLE
+=======================================
+DECLARE 
+	S_SAILOR SAILOR%ROWTYPE;
+	S_SID SAILOR.SID%TYPE;
+BEGIN
+	S_SID:='&S_SID';
+	SELECT * INTO S_SAILOR FROM SAILOR WHERE SID=S_SID;
+	DBMS_OUTPUT.PUT_LINE(S_SAILOR.SID||'  '||S_SAILOR.SNAME||'  '||S_SAILOR.AGE); 
+END;
+/
+
+
+14)Largest of given 3 numbers
+================================
+DECLARE
+	A NUMBER;
+	B NUMBER;
+	C NUMBER;
+	G NUMBER;
+BEGIN
+	A:=&A;
+	B:=&B;
+	C:=&C;
+	IF A>B AND A>C THEN G:=A;
+	ELSIF B>A AND B>C THEN G:=B;
+	ELSE G:=C;
+	END IF;
+	DBMS_OUTPUT.PUT_LINE('GREATER IS :'||G); 
+END;
+/
+
+
+15) Table of 5 using Simple loop
+==================================
+DECLARE
+	N NUMBER := 5;
+	I NUMBER := 1;
+BEGIN
+	LOOP
+		EXIT WHEN I>10;
+		DBMS_OUTPUT.PUT_LINE(N*I);
+		I:=I+1;
+	END LOOP;	
+END;
+/
+
+
+16)Table of 6 using while loop
+================================
+DECLARE
+	N NUMBER := 6;
+	I NUMBER := 1;
+BEGIN
+	WHILE I<=10 LOOP
+		DBMS_OUTPUT.PUT_LINE(N*I);
+		I:=I+1;
+	END LOOP;
+END;
+/
+
+
+17)Table of 7 using For loop
+==============================
+DECLARE
+	N NUMBER := 7;
+BEGIN
+	FOR I IN 1..10 LOOP
+		DBMS_OUTPUT.PUT_LINE(N*I);
+	END LOOP;
+END;
+/
+
+
+18)WRITE PL/SQL PROGRAM WHERE YOU INPUT  SID FROM SAILOR TABLE AND DISPLAY SNAME,RATING AGE FOR THIS SID;
+==========================================================================================================
+DECLARE
+	S_SID SAILOR.SID%TYPE;
+	S_SAILOR SAILOR%ROWTYPE;
+BEGIN
+	S_SID:='&SID';
+	SELECT * INTO S_SAILOR FROM SAILOR WHERE SID=S_SID; 
+	DBMS_OUTPUT.PUT_LINE('SNAME    RATING    AGE');
+	DBMS_OUTPUT.PUT_LINE('----------------------');
+	DBMS_OUTPUT.PUT_LINE(S_SAILOR.SNAME||'    '||S_SAILOR.RATING||'    '||S_SAILOR.AGE);
+END;
+/
+
+
+
+19)Armstrong Number:
+======================
+DECLARE
+	N NUMBER;
+	LEN NUMBER;
+	R NUMBER;
+	S NUMBER:=0;
+	N1 NUMBER;
+BEGIN
+	N:=&N;
+	N1:=N;
+	LEN:=LENGTH(N);
+	WHILE N > 0 LOOP
+		R:=N MOD 10;
+		S:=S+POWER(R,LEN);
+		N:=FLOOR(N/10);
+	END LOOP;
+
+	IF S=N1 THEN
+		DBMS_OUTPUT.PUT_LINE(N1|| ' IS ARMSTRONG');
+	ELSE
+		DBMS_OUTPUT.PUT_LINE(N1|| ' IS NOT ARMSTRONG');
+	END IF;
+END;
+/
+
+
+20)ALL ARMSTRONG NUMBER B/W 1-15000
+====================================
+DECLARE
+	LEN NUMBER;
+	R NUMBER;
+	S NUMBER;
+	I1 NUMBER;
+BEGIN
+	FOR I IN 1..15000 LOOP
+		I1:=I;
+		LEN:=LENGTH(I1);
+		S:=0;
+		WHILE I1>0 LOOP
+			R:=I1 MOD 10;
+			S:=S+POWER(R,LEN);
+			I1:=FLOOR(I1/10);
+		END LOOP;
+		IF I=S THEN
+			DBMS_OUTPUT.PUT_LINE(I);
+		END IF;
+	END LOOP;
+END;
+/
+
+
+
+21)STRING PALINDROME
+======================
+DECLARE
+	STR VARCHAR2(20);
+	STRREV VARCHAR2(20);
+	LEN NUMBER;
+	CH CHAR(1);
+BEGIN
+	STR:='&STR';
+	LEN:=LENGTH(STR);
+	
+	FOR I IN 1..LEN LOOP
+		CH:=SUBSTR(STR,I,1);
+		STRREV:=CONCAT(CH,STRREV);
+	END LOOP;
+	
+	IF STR=STRREV THEN
+		DBMS_OUTPUT.PUT_LINE('PALINDROME');
+	ELSE
+		DBMS_OUTPUT.PUT_LINE('NOT PALINDROME');
+	END IF;
+END;
+/
+
+
+22)CHECK PRIME OR NOT
+======================
+DECLARE
+	N NUMBER;
+	C NUMBER :=0;
+BEGIN
+	N:=&N;
+	FOR I IN 1..N LOOP
+		IF N MOD I = 0 THEN 
+			C:=C+1;
+		END IF;
+	END LOOP;
+	
+	IF C=2 THEN
+		DBMS_OUTPUT.PUT_LINE('PRIME');
+	ELSE
+		DBMS_OUTPUT.PUT_LINE('NON PRIME');
+	END IF;
+END;
+/
+
+
+23) PRIME NUMBER UPTO A GIVEN NUMBER
+===============================================
+DECLARE
+	N NUMBER;
+	C NUMBER;
+BEGIN
+	N:=&N;
+	FOR I IN 1..N LOOP
+		C:=0;
+		FOR J IN 1..I LOOP
+			IF I MOD J = 0 THEN
+				C:=C+1;
+			END IF; 
+		END LOOP;
+		IF C=2 THEN
+			DBMS_OUTPUT.PUT_LINE(I);
+		END IF;
+	END LOOP;
+
+END;
+/
+
+
+
+24)FIBONACCI SERIES FOR N NUMBER OF TERMS
+==========================================
+DECLARE
+	N NUMBER;
+	A NUMBER :=0;
+	B NUMBER :=1;
+	C NUMBER;
+	CO NUMBER := 1;
+BEGIN
+	N:=&N;
+	DBMS_OUTPUT.PUT_LINE(A);
+	DBMS_OUTPUT.PUT_LINE(B);
+	 LOOP
+		C:=A+B;
+		EXIT WHEN CO+2>N;        --AS A AND B ARE ALREADY PRINTED SO  WE HAVE TO EXIT WHEN CO+2>N 
+		DBMS_OUTPUT.PUT_LINE(C);
+		A:=B;
+		B:=C; 
+		CO:=CO+1;
+	END LOOP;
+END;
+/
+
+
+
